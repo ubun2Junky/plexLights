@@ -1,0 +1,9 @@
+import argparse
+
+parser=argparse.ArgumentParser(description="Plex media player ID script.")
+
+parser.add_argument('id')
+
+args = parser.parse_args()
+
+print("DEVICE ID: " + args.id)
