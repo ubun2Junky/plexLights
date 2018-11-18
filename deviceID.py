@@ -6,4 +6,4 @@ parser.add_argument('id', nargs = '+')
 
 args = parser.parse_args()
 
-print("DEVICE ID: " + str(args.id)
+print("DEVICE ID: " + str(args.id))
