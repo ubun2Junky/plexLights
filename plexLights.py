@@ -9,7 +9,7 @@ parser=argparse.ArgumentParser(description="Plex home theatre light controller s
 parser.add_argument('--loglvl', '-l', type=int, help="log detail (10 info, 20 debug)", metavar="10", choices=[10, 20])
 parser.add_argument('homeController', choices=['vera','smartthings'], help="Select between vera or smartthings controller")
 parser.add_argument('controllerIP', help="IP of the controller.")
-parser.add_argument('controllerPort', help="Port the controller is connected to.")
+parser.add_argument('controllerPort', default=3480, type=int, help="Port the controller is connected to.")
 parser.add_argument('daynightID', help="Object ID on controller")
 parser.add_argument('sceneID', help="Scene ID on controller")
 
@@ -55,4 +55,3 @@ if homeController == "vera":
 
 	if veraDayNight(DayNightStatusURL) == '0':
 		veraScene(sceneRequestURL)
-
