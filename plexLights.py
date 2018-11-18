@@ -1,7 +1,5 @@
 import argparse
-import urllib.request
-import urllib.parse
-import urllib.error
+import urllib2
 import json
 
 #Gather arguments
@@ -23,8 +21,9 @@ sceneID = args.sceneID
 
 #General Vera request function
 def veraRequest(URL):
-	response = urllib.request.urlopen(URL)
+	response = urllib2.urlopen(URL)
 	content = response.read()
+
 	data = json.loads(content.decode("utf8"))
 
 	return data
@@ -45,13 +44,12 @@ def veraScene(URL):
 	return veraStatus
 
 
-
 #MAIN
 if homeController == "vera":
 	veraIP = args.controllerIP
 	veraPort = args.controllerPort
-	DayNightStatusURL = 'http://' + veraIP + ':' + veraPort + '/data_request?id=status&output_format=json&DeviceNum=' + daynightID
-	sceneRequestURL = 'http://' + veraIP + ':' + veraPort + '/data_request?id=lu_action&output_format=json&serviceId=urn:micasaverde-com:serviceId:HomeAutomationGateway1&action=RunScene&SceneNum=' + sceneID
+	DayNightStatusURL = 'http://' + str(veraIP) + ':' + str(veraPort) + '/data_request?id=status&output_format=json&DeviceNum=' + str(daynightID)
+	sceneRequestURL = 'http://' + str(veraIP) + ':' + str(veraPort) + '/data_request?id=lu_action&output_format=json&serviceId=urn:micasaverde-com:serviceId:HomeAutomationGateway1&action=RunScene&SceneNum=' + str(sceneID)
 
 	if veraDayNight(DayNightStatusURL) == '0':
 		veraScene(sceneRequestURL)
