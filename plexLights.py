@@ -4,7 +4,10 @@ import json
 
 #Gather arguments
 parser=argparse.ArgumentParser(description="Plex home theatre light controller script.")
+
 parser.add_argument('--loglvl', '-l', type=int, help="log detail (10 info, 20 debug)", metavar="10", choices=[10, 20])
+parser.add_argument('--action', '-a', help="Trigger action")
+parser.add_argument('--media', '-m', help="Media type")
 parser.add_argument('homeController', choices=['vera','smartthings'], help="Select between vera or smartthings controller")
 parser.add_argument('controllerIP', help="IP of the controller.")
 parser.add_argument('controllerPort', default=3480, type=int, help="Port the controller is connected to.")
@@ -18,6 +21,8 @@ loglvl = args.loglvl
 homeController = args.homeController
 daynightID = args.daynightID
 sceneID = args.sceneID
+action = args.action
+media = args.media
 
 #General Vera request function
 def veraRequest(URL):
@@ -45,6 +50,9 @@ def veraScene(URL):
 
 
 #MAIN
+
+print(str(media) + " " + str(action) + " triggered script...")
+
 if homeController == "vera":
 	veraIP = args.controllerIP
 	veraPort = args.controllerPort
@@ -53,3 +61,6 @@ if homeController == "vera":
 
 	if veraDayNight(DayNightStatusURL) == '0':
 		veraScene(sceneRequestURL)
+		print("Night detected, running scene.")
+	else:
+		print("Daylight hours, scene cancelled.")
